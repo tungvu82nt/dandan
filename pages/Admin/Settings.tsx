@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useSiteConfig, SiteConfig } from '../../contexts/SiteConfigContext';
 import { SEO } from '../../components/Shared/SEO';
-import { Save, Plus, Trash2, RotateCcw } from 'lucide-react';
+import { Save, Plus, Trash2, RotateCcw, Bell } from 'lucide-react';
 
 const Settings: React.FC = () => {
   const { config, updateConfig, resetConfig } = useSiteConfig();
@@ -13,7 +13,12 @@ const Settings: React.FC = () => {
 
   const { fields: bannerFields, append: appendBanner, remove: removeBanner } = useFieldArray({
     control,
-    name: "banners" as any // Type casting for simple array path
+    name: "banners" as any
+  });
+
+  const { fields: noticeFields, append: appendNotice, remove: removeNotice } = useFieldArray({
+    control,
+    name: "notices" as any
   });
 
   // Sync form with context if config changes externally or initially
@@ -58,8 +63,86 @@ const Settings: React.FC = () => {
                 className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-primary"
                 placeholder="https://..."
               />
-              <p className="text-xs text-gray-400 mt-1">建议尺寸: 1200x120px</p>
+              <p className="text-xs text-gray-400 mt-1">
+                建议尺寸: 宽度≥1200px，高度350-400px（最大显示高度: 350px，宽度自适应100%）
+              </p>
             </div>
+          </div>
+        </section>
+
+        {/* Notice Bar Settings - NEW SECTION */}
+        <section className="bg-white p-6 rounded shadow-sm border-2 border-blue-100">
+          <div className="flex justify-between items-center mb-4 border-b pb-2">
+             <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+               <Bell className="text-blue-500" size={20} />
+               公告栏通知设置
+             </h2>
+             <button 
+                type="button"
+                onClick={() => appendNotice({ id: Date.now().toString(), content: '', link: '/', icon: '📢' })}
+                className="text-primary text-sm flex items-center gap-1 hover:bg-red-50 px-2 py-1 rounded"
+             >
+               <Plus size={16} /> 添加通知
+             </button>
+          </div>
+          
+          <p className="text-xs text-gray-500 mb-4 bg-blue-50 p-2 rounded">
+            💡 提示：这些通知将在首页顶部公告栏滚动显示，自动循环播放
+          </p>
+
+          <div className="space-y-4">
+            {noticeFields.map((field, index) => (
+              <div key={field.id} className="border border-gray-200 p-4 rounded bg-gray-50">
+                <div className="flex justify-between items-center mb-3">
+                  <label className="text-sm font-bold text-gray-700">通知 #{index + 1}</label>
+                  <button 
+                    type="button" 
+                    onClick={() => removeNotice(index)}
+                    className="text-red-400 hover:text-red-600 text-xs flex items-center gap-1"
+                    title="删除"
+                  >
+                    <Trash2 size={14} /> 删除
+                  </button>
+                </div>
+                
+                <div className="grid grid-cols-12 gap-3">
+                  <div className="col-span-1">
+                    <label className="block text-xs text-gray-600 mb-1">图标</label>
+                    <input 
+                      {...register(`notices.${index}.icon` as const)} 
+                      className="w-full border border-gray-300 rounded px-2 py-2 text-center focus:outline-none focus:border-primary"
+                      placeholder="📢"
+                      maxLength={2}
+                    />
+                  </div>
+                  
+                  <div className="col-span-7">
+                    <label className="block text-xs text-gray-600 mb-1">通知内容 *</label>
+                    <input 
+                      {...register(`notices.${index}.content` as const)} 
+                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-primary"
+                      placeholder="输入通知内容..."
+                      required
+                    />
+                  </div>
+                  
+                  <div className="col-span-4">
+                    <label className="block text-xs text-gray-600 mb-1">跳转链接 *</label>
+                    <input 
+                      {...register(`notices.${index}.link` as const)} 
+                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-primary"
+                      placeholder="/news/..."
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+            {noticeFields.length === 0 && (
+              <p className="text-gray-400 text-sm text-center py-8 border-2 border-dashed border-gray-200 rounded">
+                暂无通知，点击上方"添加通知"按钮开始添加
+              </p>
+            )}
           </div>
         </section>
 

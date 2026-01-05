@@ -51,7 +51,7 @@ const Volunteer: React.FC = () => {
 
   return (
     <div className="bg-white py-12 min-h-screen">
-       <SEO title="志愿服务" description="加入西安市慈善会志愿者行列，一起传递温暖。" />
+       <SEO title="志愿服务" description="加入长安仁爱慈善基金会志愿者行列，一起传递温暖。" />
        <div className="max-w-container mx-auto px-4 md:px-0">
            <div className="text-center mb-12">
                <h1 className="text-3xl font-bold text-primary mb-4">加入志愿者行列</h1>

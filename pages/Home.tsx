@@ -21,7 +21,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="bg-bgBlock pb-10">
-      <SEO title="首页" description="西安市慈善会官方门户网站，提供慈善项目捐赠、信息公开、新闻资讯等服务。" />
+      <SEO title="首页" description="长安仁爱慈善基金会官方门户网站，提供慈善项目捐赠、信息公开、新闻资讯等服务。" />
       
       {/* Hero Slider Area */}
       <HomeBanner />

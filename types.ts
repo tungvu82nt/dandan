@@ -67,3 +67,11 @@ export interface StatMetric {
   unit?: string;
   iconType: 'money' | 'out' | 'people';
 }
+
+// Interface cho thông báo chạy (Notice Bar)
+export interface NoticeItem {
+  id: string;
+  content: string;
+  link: string;
+  icon?: string; // Emoji hoặc icon, mặc định: 📢
+}

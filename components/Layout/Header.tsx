@@ -21,7 +21,7 @@ const Header: React.FC = () => {
         <div className="max-w-container mx-auto flex justify-between items-center h-9 px-4 md:px-0">
           <div className="w-64 md:w-96 overflow-hidden relative h-full flex items-center">
             <div className="text-textSub text-[12px] absolute whitespace-nowrap animate-marquee">
-              您好，欢迎来到西安市慈善会！！！
+              您好，欢迎来到长安仁爱慈善基金会！！！
             </div>
           </div>
           <div className="text-textSub text-[12px] flex gap-2">
@@ -32,15 +32,13 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Banner Image */}
-      <div className="w-full bg-white">
-        <div className="max-w-container mx-auto">
-          <img 
-            src={config.headerImage} 
-            alt="Header Banner" 
-            className="w-full h-auto object-cover max-h-[120px] md:max-h-full"
-          />
-        </div>
+      {/* Banner Image - Full Width */}
+      <div className="w-full bg-white min-w-[1200px]">
+        <img 
+          src={config.headerImage} 
+          alt="Header Banner" 
+          className="w-full h-auto object-cover max-h-[350px]"
+        />
       </div>
 
       {/* Navigation */}

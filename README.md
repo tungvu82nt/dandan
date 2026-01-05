@@ -17,6 +17,7 @@ Dự án tái cấu trúc cổng thông tin điện tử của Hội Từ thiệ
 *   **Quản lý Quyên góp:** Theo dõi dòng tiền thời gian thực từ người dùng đóng góp.
 *   **Quản lý Tình nguyện viên:** Phê duyệt hoặc từ chối đơn đăng ký.
 *   **Cấu hình Hệ thống:** Tùy chỉnh Banner trang chủ, thông tin Footer, và các liên kết mạng xã hội.
+*   **📢 Quản lý Thông báo (NEW):** Thêm/sửa/xóa thông báo chạy liên tục trên thanh công bố trang chủ.
 
 ## 🛠 Công nghệ Sử dụng
 
@@ -44,9 +45,9 @@ Dự án tái cấu trúc cổng thông tin điện tử của Hội Từ thiệ
 
 3.  **Chạy môi trường phát triển (Dev):**
     ```bash
-    npm start
+    npm run dev
     ```
-    Truy cập: `http://localhost:8080`
+    Truy cập: `http://localhost:3000`
 
 4.  **Tài khoản Admin Demo:**
     *   URL: `/admin/login`
@@ -67,6 +68,8 @@ Dự án tái cấu trúc cổng thông tin điện tử của Hội Từ thiệ
 │   ├── App.tsx          # Main App & Routing
 │   └── main.tsx         # Entry point
 ├── docs/                # Tài liệu kỹ thuật chi tiết
+│   ├── NOTICE_MANAGEMENT_GUIDE.md  # 📢 Hướng dẫn quản lý thông báo
+│   └── ...
 └── README.md            # Hướng dẫn chung
 ```
 

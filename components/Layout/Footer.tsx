@@ -17,35 +17,23 @@ const Footer: React.FC = () => {
               <p><span className="text-primary font-bold">开户单位:</span> {footer.bankUnit}</p>
               <p><span className="text-primary font-bold">开 户 行:</span> {footer.bankName}</p>
               <p><span className="text-primary font-bold">捐赠账号:</span> {footer.bankAccount}</p>
-              <p><span className="text-primary font-bold">咨询电话:</span> {footer.phone} （财务室）</p>
-              <p><span className="text-primary font-bold">网络筹款:</span> 029-88443165 （网信部）</p>
-              <p className="text-xs text-textLight mt-2">备注：请注明捐款用途</p>
+              <p><span className="text-primary font-bold">咨询电话:</span> {footer.phone} （综合办公室）</p>
+              <p><span className="text-primary font-bold">项目咨询:</span> 029-86785599 （项目与救助部）</p>
+              <p className="text-xs text-textLight mt-2">备注：请注明捐款用途及项目名称</p>
             </div>
           </div>
 
           {/* Contact Info */}
           <div className="flex-[2] text-sm leading-7">
-            <h3 className="font-bold text-lg mb-2 text-textMain">西安市慈善会</h3>
+            <h3 className="font-bold text-lg mb-2 text-textMain">长安仁爱慈善基金会</h3>
             <p>地址：{footer.address}</p>
             <p>电话：{footer.phone}</p>
             <p>邮箱：{footer.email}</p>
-            <p>邮编：710021</p>
+            <p>邮编：710000</p>
             <p className="mt-4">
-              <a href="#" className="hover:text-primary transition-colors">陕ICP备16001582号-1</a>
+              <a href="#" className="hover:text-primary transition-colors">陕ICP备19024568号-1</a>
             </p>
             <p>技术支持：{footer.techSupport}</p>
-          </div>
-
-          {/* QR Codes */}
-          <div className="flex-1 flex justify-end gap-6">
-            <div className="text-center">
-              <img 
-                src="https://res-img.n.gongyibao.cn/uploads/1dbdc970-d95e-45a8-859b-86e4e9abe89e/20210825/248ac00189d845b09a8470fd7cf8e806.png" 
-                alt="WeChat" 
-                className="w-24 h-24 mb-2 p-1 border border-borderGray bg-white"
-              />
-              <p className="text-xs text-textSub">扫码关注官方微信</p>
-            </div>
           </div>
 
         </div>

@@ -27,7 +27,7 @@ const Login: React.FC = () => {
       <div className="bg-white p-8 rounded shadow-lg w-full max-w-md">
         <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-gray-800 mb-2">管理后台登录</h1>
-            <p className="text-gray-500 text-sm">西安市慈善会</p>
+            <p className="text-gray-500 text-sm">长安仁爱慈善基金会</p>
         </div>
         
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

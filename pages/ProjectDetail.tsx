@@ -145,7 +145,7 @@ const ProjectDetail: React.FC = () => {
                         <span className="w-4 h-4 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center text-xs">!</span>
                         温馨提示：
                     </h4>
-                    <p className="opacity-90">西安市慈善会承诺：您的每一笔捐款都将用于该公益项目，我们将定期公示项目进展和资金使用情况。若项目执行完毕后仍有剩余善款，将用于同类其他慈善项目。</p>
+                    <p className="opacity-90">长安仁爱慈善基金会承诺：您的每一笔捐款都将用于该公益项目，我们将定期公示项目进展和资金使用情况。若项目执行完毕后仍有剩余善款，将用于同类其他慈善项目。</p>
                 </div>
             </div>
 

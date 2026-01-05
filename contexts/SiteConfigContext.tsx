@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { NoticeItem } from '../types';
 
 // Define the shape of our configuration
 export interface SiteConfig {
   headerImage: string;
   banners: string[];
+  notices: NoticeItem[]; // Mảng thông báo chạy
   footer: {
     address: string;
     phone: string;
@@ -23,13 +25,18 @@ const DEFAULT_CONFIG: SiteConfig = {
     "https://picsum.photos/1200/400?random=101",
     "https://picsum.photos/1200/400?random=102"
   ],
+  notices: [
+    { id: '1', content: '长安仁爱慈善基金会郑重声明：谨防诈骗', link: '/news/n1', icon: '📢' },
+    { id: '2', content: '热烈庆祝长安仁爱慈善基金会持续运营超过25周年', link: '/about', icon: '📢' },
+    { id: '3', content: '慈善帮扶解难忧，锦旗回馈话初心', link: '/news/n2', icon: '📢' }
+  ],
   footer: {
-    address: "西安慈善大厦9层（未央区凤城四路105号）",
-    phone: "029-88443055",
-    email: "641457472@qq.com",
-    bankName: "浦发银行西安文景路支行",
-    bankAccount: "72130154800000128",
-    bankUnit: "西安市慈善会",
+    address: "陕西省西安市莲湖区长安文化遗产大厦五层",
+    phone: "029-86785588",
+    email: "info@renai-changan.org",
+    bankName: "浦发银行长安支行",
+    bankAccount: "62150178900000256",
+    bankUnit: "长安仁爱慈善基金会",
     techSupport: "北京厚普聚益科技有限公司"
   }
 };
@@ -50,7 +57,13 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const savedConfig = localStorage.getItem('siteConfig');
     if (savedConfig) {
       try {
-        setConfig(JSON.parse(savedConfig));
+        const parsed = JSON.parse(savedConfig);
+        // Merge với DEFAULT_CONFIG để đảm bảo có đầy đủ fields mới
+        setConfig({
+          ...DEFAULT_CONFIG,
+          ...parsed,
+          notices: parsed.notices || DEFAULT_CONFIG.notices // Fallback cho field notices mới
+        });
       } catch (e) {
         console.error("Failed to parse site config", e);
       }

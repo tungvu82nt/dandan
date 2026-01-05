@@ -19,7 +19,7 @@ const About: React.FC = () => {
 
   return (
     <div className="bg-white min-h-screen pb-12">
-       <SEO title="机构介绍" description="西安市慈善会简介" />
+       <SEO title="机构介绍" description="长安仁爱慈善基金会简介" />
        
        <div className="max-w-container mx-auto px-4 md:px-0 py-8">
            <div className="flex flex-col md:flex-row gap-8">
@@ -53,10 +53,10 @@ const About: React.FC = () => {
                    <div className="p-4 text-center">
                        <img 
                          src="https://res-img.n.gongyibao.cn/uploads/1dbdc970-d95e-45a8-859b-86e4e9abe89e/20210825/248ac00189d845b09a8470fd7cf8e806.png" 
-                         alt="西安市慈善会公众号" 
+                         alt="长安仁爱慈善基金会公众号" 
                          className="w-40 h-40 mx-auto mb-2 border border-gray-200 p-1" 
                        />
-                       <p className="text-sm font-bold text-gray-800 tracking-wider">西安市慈善会</p>
+                       <p className="text-sm font-bold text-gray-800 tracking-wider">长安仁爱慈善基金会</p>
                    </div>
                </div>
 
@@ -64,9 +64,9 @@ const About: React.FC = () => {
                <div className="flex-1">
                    {/* Article Header */}
                    <div className="border-b border-gray-200 pb-4 mb-8 text-center">
-                       <h1 className="text-3xl font-normal text-gray-800 mb-6 tracking-wide">西安市慈善会简介</h1>
+                       <h1 className="text-3xl font-normal text-gray-800 mb-6 tracking-wide">长安仁爱慈善基金会简介</h1>
                        <div className="flex justify-center items-center gap-8 text-xs text-gray-400">
-                           <span className="flex items-center gap-1">📅 2024-04-07 16:35</span>
+                           <span className="flex items-center gap-1">📅 2026-01-05 12:00</span>
                            <span>来源：本站</span>
                            <div className="flex gap-2 items-center">
                                {/* Mock Share Icons using simple colored squares to mimic the image */}
@@ -84,24 +84,24 @@ const About: React.FC = () => {
                    {/* Article Content */}
                    <div className="prose max-w-none text-gray-800 text-justify leading-9 text-[16px]">
                        <p className="indent-8 mb-6">
-                           西安市慈善会是经西安市政府批准，市民政局注资，于1997年9月26日在西安市民政局登记注册成立，是具有独立法人资格的公益性、非营利性社会团体和公募资质的慈善机构，属5A级中国社会团体组织。
+                           长安仁爱慈善基金会是经陕西省民政部门批准，于1999年10月26日正式注册成立的非营利性社会组织，具有独立法人资格和公开募捐资质。基金会总部设立于西安市莲湖区长安文化遗产大厦五层，是中国西北地区少数获得民政系统4A+等级评定的慈善机构之一。
                        </p>
                        <p className="indent-8 mb-6">
-                           西安市慈善会现有会长1人，执行会长兼秘书长1人，副会长26人（驻会3人），慈善专员10人（驻会1人），常务理事66人，理事204人，单位会员119个，个人会员524人。西安市慈善会内设一室六部：办公室：综合协调、行政事务、财务管理等；募集部：组织动员、开展国内外公募善款善物；项目部：策划组织实施各类慈善项目；救助部：实施救助社会各类困难群体；宣传部：开展慈善公益宣传，传播慈善文化；网信部：负责官网运行管理并实施各类网络慈善活动，开展网络慈善；联络部：组织联络各类慈善机构、社会团体、爱心企业、志愿者团队开展各类慈善活动，建立健全会员、理事等档案管理工作。
+                           长安仁爱慈善基金会现设理事会15名成员，由长安历史与文化研究领域的学者、国家级及地方级非遗传承人、具备社会影响力的本地企业家组成。基金会内设综合办公室（行政与财务）、项目与救助部、传播与科技部三大职能部门，负责预算管控、项目统筹、新媒体运营等工作。
                        </p>
                        <p className="indent-8 mb-6">
-                           西安市慈善会自成立以来，认真贯彻落实《中华人民共和国慈善法》，以“扶贫济困、救急助难、弘扬慈善文化、助推社会和谐”为己任，设立各类基金100余个，投入善款和物资共计近8亿元，实施项目万余个，惠及人民群众500多万人次。创立了有社会影响的“春节送温暖”、“六一送关爱”、“九九送关怀”、“高考助圆梦”、“慈善便民桥”、“幸福家园工程”等多个品牌项目，受到社会广泛关注和好评。
+                           基金会自成立以来，始终秉持"系统性开展人道救助与欠发达地区教育支持，长期致力于长安文化遗产的保护、传承与社会化延续"的宗旨使命，累计募集善款超过2.33亿元人民币，项目实际支出约2.06亿元，资金使用率达88%，累计捐赠人次超过20万。创立了"文化传承奖学金计划"、"长安英烈致敬计划"、"盛夏关怀行动"等多个具有社会影响力的品牌项目。
                        </p>
                        <p className="indent-8 mb-6">
-                           西安市慈善会被中华慈善总会授予“突出贡献组织奖”、“中华慈善先进机构奖”、“突出贡献项目奖”；被省民政厅、省人力资源和社会保障厅授予“慈善项目和慈善信托奖”；被省委文明办、省慈善协会授予“三秦善星奖”；被市政府授予“抗击疫情突出贡献社会组织奖”；被市民政局授予“先进基层党组织”等荣誉称号。
+                           长安仁爱慈善基金会不仅是公益执行者，更是长安精神与文化价值的守护者。基金会坚持财务透明、依法合规、内部治理与风险控制达到国家级优良标准，持续稳定运作超过二十五年，在慈善领域树立了良好的社会信用。
                        </p>
                        <p className="indent-8 mb-6">
-                           欢迎各级各类组织，爱心企业、爱心人士参与西安慈善，支持西安慈善，监督西安慈善。
+                           欢迎各级各类组织，爱心企业、爱心人士参与长安慈善，支持长安慈善，监督长安慈善。
                        </p>
                    </div>
                    
                    <div className="mt-12 text-[16px] text-gray-800">
-                       <p>爱心捐赠电话：029-88443055；029-88868053；18192168337</p>
+                       <p>爱心捐赠电话：029-86785588；029-86785599；400-8888-520</p>
                    </div>
                </div>
            </div>

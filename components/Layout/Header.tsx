@@ -17,23 +17,23 @@ const Header: React.FC = () => {
   return (
     <header className="w-full bg-white">
       {/* Top Bar */}
-      <div className="w-full border-b border-gray-100">
-        <div className="max-w-container mx-auto flex justify-between items-center h-10 px-4 md:px-0">
+      <div className="w-full border-b border-gray-100 bg-white">
+        <div className="max-w-container mx-auto flex justify-between items-center h-9 px-4 md:px-0">
           <div className="w-64 md:w-96 overflow-hidden relative h-full flex items-center">
-            <div className="text-textGray text-sm absolute whitespace-nowrap animate-marquee">
+            <div className="text-textSub text-[12px] absolute whitespace-nowrap animate-marquee">
               您好，欢迎来到西安市慈善会！！！
             </div>
           </div>
-          <div className="text-textGray text-sm flex gap-2">
-            <button className="hover:text-primary">登录</button>
+          <div className="text-textSub text-[12px] flex gap-2">
+            <button className="hover:text-primary transition-colors">登录</button>
             <span>|</span>
-            <button className="hover:text-primary">注册</button>
+            <button className="hover:text-primary transition-colors">注册</button>
           </div>
         </div>
       </div>
 
       {/* Banner Image */}
-      <div className="w-full bg-gray-100">
+      <div className="w-full bg-white">
         <div className="max-w-container mx-auto">
           <img 
             src={config.headerImage} 
@@ -56,7 +56,7 @@ const Header: React.FC = () => {
               >
                 <Link
                   to={item.path}
-                  className={`block text-center py-4 text-white text-lg transition-colors duration-300 ${
+                  className={`block text-center py-3.5 text-white text-[16px] font-medium tracking-wide transition-colors duration-300 ${
                     isActive(item.path) ? 'bg-secondary' : 'hover:bg-secondary'
                   }`}
                 >
@@ -70,7 +70,7 @@ const Header: React.FC = () => {
                       <li key={child.id} className="border-b border-gray-100 last:border-0">
                         <Link 
                           to={child.path}
-                          className="block py-3 px-4 text-center text-gray-700 hover:text-primary hover:bg-gray-50 text-sm"
+                          className="block py-3 px-4 text-center text-gray-700 hover:text-primary hover:bg-gray-50 text-[13px]"
                         >
                           {child.label}
                         </Link>

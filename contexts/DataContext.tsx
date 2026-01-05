@@ -15,25 +15,31 @@ interface DataContextType {
   // Volunteer Actions
   addVolunteer: (volunteer: Omit<Volunteer, 'id' | 'status' | 'date'>) => void;
   updateVolunteerStatus: (id: number, status: 'pending' | 'approved' | 'rejected') => void;
+  // Donation Actions
+  addDonation: (record: Omit<DonationRecord, 'id' | 'date'>) => void;
 }
 
 const DataContext = createContext<DataContextType | null>(null);
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Initialize state from mockData
+  // Initialize state
   const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
   const [volunteers, setVolunteers] = useState<Volunteer[]>(INITIAL_VOLUNTEERS);
-  const [donations] = useState<DonationRecord[]>(INITIAL_DONATIONS); // Read-only for now
+  const [donations, setDonations] = useState<DonationRecord[]>(INITIAL_DONATIONS);
   
-  // Persistence (Optional for demo - keeps data on refresh)
+  // Load from LocalStorage on mount
   useEffect(() => {
     const savedProjects = localStorage.getItem('app_projects');
     if (savedProjects) setProjects(JSON.parse(savedProjects));
     
     const savedVolunteers = localStorage.getItem('app_volunteers');
     if (savedVolunteers) setVolunteers(JSON.parse(savedVolunteers));
+
+    const savedDonations = localStorage.getItem('app_donations');
+    if (savedDonations) setDonations(JSON.parse(savedDonations));
   }, []);
 
+  // Save to LocalStorage on change
   useEffect(() => {
     localStorage.setItem('app_projects', JSON.stringify(projects));
   }, [projects]);
@@ -42,7 +48,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('app_volunteers', JSON.stringify(volunteers));
   }, [volunteers]);
 
-  // Project Actions
+  useEffect(() => {
+    localStorage.setItem('app_donations', JSON.stringify(donations));
+  }, [donations]);
+
+  // --- Project Actions ---
   const addProject = (project: Project) => {
     setProjects(prev => [project, ...prev]);
   };
@@ -55,7 +65,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setProjects(prev => prev.filter(p => p.id !== id));
   };
 
-  // Volunteer Actions
+  // --- Volunteer Actions ---
   const addVolunteer = (data: Omit<Volunteer, 'id' | 'status' | 'date'>) => {
     const newVolunteer: Volunteer = {
       ...data,
@@ -70,6 +80,30 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setVolunteers(prev => prev.map(v => v.id === id ? { ...v, status } : v));
   };
 
+  // --- Donation Actions ---
+  const addDonation = (record: Omit<DonationRecord, 'id' | 'date'>) => {
+    const newDonation: DonationRecord = {
+      ...record,
+      id: Date.now().toString(),
+      date: new Date().toISOString().split('T')[0]
+    };
+
+    // 1. Add to donation list
+    setDonations(prev => [newDonation, ...prev]);
+
+    // 2. Automatically update the corresponding project's raised amount
+    setProjects(prevProjects => prevProjects.map(p => {
+      if (p.title === record.projectTitle) {
+        return {
+          ...p,
+          raised: p.raised + record.amount,
+          donors: p.donors + 1
+        };
+      }
+      return p;
+    }));
+  };
+
   return (
     <DataContext.Provider value={{
       projects,
@@ -81,7 +115,8 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       updateProject,
       deleteProject,
       addVolunteer,
-      updateVolunteerStatus
+      updateVolunteerStatus,
+      addDonation
     }}>
       {children}
     </DataContext.Provider>

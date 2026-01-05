@@ -1,20 +1,73 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Xi'an Charity Association Portal (Reconstruction) | Hội Từ thiện Tây An
 
-# Run and deploy your AI Studio app
+Dự án tái cấu trúc cổng thông tin điện tử của Hội Từ thiện Tây An (Xi'an Charity Association) sử dụng công nghệ React hiện đại, tối ưu hóa trải nghiệm người dùng và tích hợp hệ thống quản trị nội dung (CMS) phía client.
 
-This contains everything you need to run your app locally.
+## 🌟 Tính năng Nổi bật
 
-View your app in AI Studio: https://ai.studio/apps/drive/1D52ogNe9sGELhFXmk3FkPwjEjy9SPj9A
+### 1. Phân hệ Người dùng (Client Public)
+*   **Giao diện Responsive:** Tương thích hoàn toàn với Mobile, Tablet và Desktop.
+*   **Hệ thống Quyên góp:** Xem chi tiết dự án, thanh tiến độ thời gian thực, và giả lập quyên góp tích hợp.
+*   **Tin tức & Truyền thông:** Phân loại tin tức (từ thiện, báo chí, quận huyện) với giao diện trực quan.
+*   **Công khai Minh bạch:** Tra cứu danh sách quyên góp, báo cáo tài chính.
+*   **Tình nguyện viên:** Form đăng ký tình nguyện viên với Validate dữ liệu chặt chẽ (Zod).
 
-## Run Locally
+### 2. Phân hệ Quản trị (Admin Dashboard)
+*   **Dashboard:** Biểu đồ thống kê tổng quan (Tổng tiền, số dự án, lượt truy cập).
+*   **Quản lý Dự án:** Thêm, Sửa, Xóa dự án từ thiện.
+*   **Quản lý Quyên góp:** Theo dõi dòng tiền thời gian thực từ người dùng đóng góp.
+*   **Quản lý Tình nguyện viên:** Phê duyệt hoặc từ chối đơn đăng ký.
+*   **Cấu hình Hệ thống:** Tùy chỉnh Banner trang chủ, thông tin Footer, và các liên kết mạng xã hội.
 
-**Prerequisites:**  Node.js
+## 🛠 Công nghệ Sử dụng
 
+*   **Core:** React 18, TypeScript, Vite.
+*   **UI Framework:** Tailwind CSS (Custom Config theo Design System gốc).
+*   **State Management:** React Context API (DataContext, AuthContext, SiteConfigContext).
+*   **Routing:** React Router v6 (Lazy Loading).
+*   **Form Handling:** React Hook Form + Zod Validation.
+*   **Icons:** Lucide React.
+*   **SEO:** React Helmet Async.
+*   **Data Persistence:** LocalStorage (Giả lập Database).
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🚀 Cài đặt và Chạy dự án
+
+1.  **Clone dự án:**
+    ```bash
+    git clone [url-repo]
+    cd xian-charity-portal
+    ```
+
+2.  **Cài đặt thư viện:**
+    ```bash
+    npm install
+    ```
+
+3.  **Chạy môi trường phát triển (Dev):**
+    ```bash
+    npm start
+    ```
+    Truy cập: `http://localhost:8080`
+
+4.  **Tài khoản Admin Demo:**
+    *   URL: `/admin/login`
+    *   Username: `admin`
+    *   Password: `123456`
+
+## 📂 Cấu trúc Thư mục
+
+```
+/
+├── public/              # Tài nguyên tĩnh
+├── src/
+│   ├── components/      # Các component tái sử dụng (Layout, Shared, Feature-specific)
+│   ├── contexts/        # Logic xử lý dữ liệu toàn cục (Data, Auth, Config)
+│   ├── pages/           # Các trang giao diện (Admin & Public)
+│   ├── services/        # Mock data và logic giả lập API
+│   ├── types/           # Định nghĩa TypeScript Interfaces
+│   ├── App.tsx          # Main App & Routing
+│   └── main.tsx         # Entry point
+├── docs/                # Tài liệu kỹ thuật chi tiết
+└── README.md            # Hướng dẫn chung
+```
+
+Để xem chi tiết tài liệu kỹ thuật, vui lòng truy cập thư mục `docs/`.

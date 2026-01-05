@@ -5,9 +5,10 @@ import { SEO } from '../components/Shared/SEO';
 
 const ProjectDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { projects, donations } = useData();
+  const { projects, donations, addDonation } = useData();
   const project = projects.find(p => p.id === id);
   const [donateAmount, setDonateAmount] = useState<string>('10');
+  const [isDonating, setIsDonating] = useState(false);
 
   if (!project) {
     return (
@@ -22,17 +23,41 @@ const ProjectDetail: React.FC = () => {
     ? Math.min(100, (project.raised / project.target) * 100).toFixed(1) 
     : '0';
 
-  const handleDonate = () => {
-      alert(`感谢您的善心！您即将捐赠 ${donateAmount} 元。\n(此功能为演示，未连接真实支付)`);
+  const handleDonate = async () => {
+      if (!donateAmount || Number(donateAmount) <= 0) {
+          alert("请输入有效的捐赠金额");
+          return;
+      }
+
+      setIsDonating(true);
+      
+      // Simulate API latency
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      addDonation({
+          donor: '热心网友', // Default name for quick donation
+          amount: Number(donateAmount),
+          projectTitle: project.title,
+          payType: '微信支付',
+          channel: '官网PC端'
+      });
+
+      setIsDonating(false);
+      alert(`感谢您的善心！成功捐赠 ${donateAmount} 元。\n数据已同步至后台及公示列表。`);
+      setDonateAmount('');
   };
 
+  // Filter donations for this specific project if needed, or show all top donations
+  // For this design, let's show global donations to show activity
+  const recentDonations = donations.slice(0, 15);
+
   return (
-    <div className="bg-gray-50 min-h-screen py-8">
+    <div className="bg-bgBlock min-h-screen py-8">
       <SEO title={project.title} description={project.description} />
       <div className="max-w-container mx-auto px-4 md:px-0">
         
         {/* Breadcrumb */}
-        <div className="text-sm text-gray-500 mb-4">
+        <div className="text-[12px] text-textSub mb-4">
             <Link to="/" className="hover:text-primary">首页</Link> &gt; 
             <Link to="/projects" className="hover:text-primary"> 慈善项目</Link> &gt; 
             <span className="text-gray-800"> 项目详情</span>
@@ -40,48 +65,62 @@ const ProjectDetail: React.FC = () => {
 
         {/* Top Info Section */}
         <div className="bg-white p-6 shadow-sm mb-6 flex flex-col md:flex-row gap-8">
-            <div className="w-full md:w-[450px] shrink-0">
-                <img src={project.image} alt={project.title} className="w-full h-auto rounded" />
+            <div className="w-full md:w-[480px] shrink-0 h-[320px] overflow-hidden rounded relative border border-gray-100">
+                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                <div className={`absolute top-0 right-0 px-3 py-1 text-white text-xs ${project.status === 'active' ? 'bg-primary' : 'bg-gray-500'}`}>
+                    {project.status === 'active' ? '募捐中' : '已结束'}
+                </div>
             </div>
             
-            <div className="flex-1">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">{project.title}</h1>
-                <div className="bg-gray-50 p-4 rounded mb-6">
-                     <p className="text-gray-500 text-sm mb-2">募捐备案编号：51610100573539824XA21008</p>
-                     <p className="text-gray-500 text-sm">有效期：{project.validDate}</p>
-                </div>
+            <div className="flex-1 flex flex-col justify-between py-2">
+                <div>
+                    <h1 className="text-2xl font-bold text-textMain mb-4 leading-tight">{project.title}</h1>
+                    <div className="bg-[#f9f9f9] p-4 rounded mb-6 border border-gray-100 text-[13px] text-textSub space-y-2">
+                         <p>募捐备案编号：<span className="text-gray-800">51610100573539824XA21008</span></p>
+                         <p>项目有效期：<span className="text-gray-800">{project.validDate}</span></p>
+                         <p>项目类别：<span className="bg-gray-200 px-2 py-0.5 rounded text-xs">{project.category || '综合'}</span></p>
+                    </div>
 
-                {/* Progress */}
-                <div className="mb-6">
-                    <div className="flex justify-between text-sm mb-1">
-                        <span>已筹：<strong className="text-accent text-lg">￥{project.raised.toLocaleString()}</strong></span>
-                        <span className="text-gray-500">目标：{typeof project.target === 'number' ? `￥${project.target.toLocaleString()}` : project.target}</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3">
-                        <div className="bg-primary h-3 rounded-full transition-all duration-1000" style={{width: `${percent}%`}}></div>
-                    </div>
-                    <div className="flex justify-between text-xs text-gray-500 mt-1">
-                        <span>进度: {percent}%</span>
-                        <span>{project.donors} 人次参与</span>
+                    {/* Progress */}
+                    <div className="mb-8">
+                        <div className="flex justify-between items-end mb-2">
+                            <div>
+                                <span className="text-3xl font-bold text-accent font-sans">￥{project.raised.toLocaleString()}</span>
+                                <span className="text-xs text-textSub ml-2">已筹金额</span>
+                            </div>
+                            <span className="text-xs text-textSub">目标：{typeof project.target === 'number' ? `￥${project.target.toLocaleString()}` : project.target}</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                            <div className="bg-gradient-to-r from-accent to-yellow-500 h-full rounded-full transition-all duration-1000" style={{width: `${percent}%`}}></div>
+                        </div>
+                        <div className="flex justify-between text-[12px] text-textLight mt-2">
+                            <span>当前进度: <span className="text-accent">{percent}%</span></span>
+                            <span><span className="text-textMain font-bold">{project.donors}</span> 人次参与捐款</span>
+                        </div>
                     </div>
                 </div>
 
                 {/* Donation Action */}
-                <div className="flex items-center gap-4">
-                    <div className="flex border border-gray-300 rounded overflow-hidden">
-                        <span className="bg-gray-100 px-3 py-2 text-gray-500 border-r border-gray-300">￥</span>
+                <div className="flex items-center gap-4 mt-auto">
+                    <div className="flex border-2 border-primary rounded overflow-hidden h-10">
+                        <span className="bg-gray-50 px-3 flex items-center text-gray-500 border-r border-gray-200 text-sm font-bold">￥</span>
                         <input 
                             type="number" 
-                            className="w-24 px-2 focus:outline-none" 
+                            className="w-32 px-3 focus:outline-none font-bold text-gray-700" 
                             value={donateAmount}
                             onChange={(e) => setDonateAmount(e.target.value)}
+                            disabled={isDonating || project.status !== 'active'}
                         />
                     </div>
                     <button 
-                        className="bg-primary text-white px-8 py-2 rounded text-lg font-bold hover:bg-secondary shadow-lg transform active:scale-95 transition-all"
+                        className={`flex-1 text-white h-10 rounded text-[16px] font-bold shadow-md transform active:scale-95 transition-all tracking-wider ${isDonating || project.status !== 'active' ? 'bg-gray-400 cursor-not-allowed' : 'bg-primary hover:bg-secondary'}`}
                         onClick={handleDonate}
+                        disabled={isDonating || project.status !== 'active'}
                     >
-                        立即捐款
+                        {isDonating ? '处理中...' : project.status !== 'active' ? '项目已结束' : '立即捐款'}
+                    </button>
+                    <button className="border border-gray-300 text-gray-600 h-10 px-4 rounded hover:bg-gray-50 text-sm">
+                        分享
                     </button>
                 </div>
             </div>
@@ -89,28 +128,39 @@ const ProjectDetail: React.FC = () => {
 
         {/* Content & Records Tabs */}
         <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-[3] bg-white p-6 shadow-sm min-h-[400px]">
-                <h3 className="text-lg font-bold border-b-2 border-primary pb-2 mb-4 w-24">项目详情</h3>
-                <div className="prose max-w-none text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: project.content || project.description }}></div>
+            <div className="flex-[3] bg-white p-8 shadow-sm min-h-[400px]">
+                <div className="border-b border-gray-200 mb-6">
+                    <span className="inline-block border-t-2 border-primary py-3 px-6 bg-white text-primary font-bold -mt-px text-lg">
+                        项目详情
+                    </span>
+                    <span className="inline-block py-3 px-6 text-gray-500 hover:text-gray-800 cursor-pointer text-lg">
+                        项目进展
+                    </span>
+                </div>
                 
-                <div className="mt-8 bg-yellow-50 border border-yellow-100 p-4 text-sm text-yellow-800">
-                    <h4 className="font-bold mb-1">温馨提示：</h4>
-                    <p>西安市慈善会承诺：您的每一笔捐款都将用于该公益项目，我们将定期公示项目进展和资金使用情况。</p>
+                <div className="prose max-w-none text-textMain leading-loose text-[14px]" dangerouslySetInnerHTML={{ __html: project.content || project.description }}></div>
+                
+                <div className="mt-10 bg-orange-50 border border-orange-100 p-4 text-[13px] text-orange-800 rounded">
+                    <h4 className="font-bold mb-1 flex items-center gap-2">
+                        <span className="w-4 h-4 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center text-xs">!</span>
+                        温馨提示：
+                    </h4>
+                    <p className="opacity-90">西安市慈善会承诺：您的每一笔捐款都将用于该公益项目，我们将定期公示项目进展和资金使用情况。若项目执行完毕后仍有剩余善款，将用于同类其他慈善项目。</p>
                 </div>
             </div>
 
-            <div className="flex-1 bg-white p-4 shadow-sm h-fit">
-                <h3 className="text-lg font-bold border-b border-gray-200 pb-2 mb-4">爱心榜单</h3>
-                <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
-                    {donations.slice(0, 10).map((d, i) => (
-                        <div key={d.id} className="flex items-center justify-between text-sm border-b border-gray-50 pb-2">
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-500">
-                                    {d.donor[0]}
+            <div className="flex-1 bg-white p-5 shadow-sm h-fit">
+                <h3 className="text-lg font-bold border-l-4 border-primary pl-3 mb-5 text-textMain">爱心捐赠榜</h3>
+                <div className="space-y-4 max-h-[500px] overflow-y-auto pr-1 custom-scrollbar">
+                    {recentDonations.map((d, i) => (
+                        <div key={d.id} className="flex items-center justify-between text-sm border-b border-dashed border-gray-100 pb-3 last:border-0">
+                            <div className="flex items-center gap-3">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white ${i < 3 ? 'bg-yellow-400' : 'bg-gray-200 text-gray-500'}`}>
+                                    {i + 1}
                                 </div>
                                 <div>
                                     <p className="font-bold text-gray-700">{d.donor}</p>
-                                    <p className="text-xs text-gray-400">{d.date}</p>
+                                    <p className="text-[10px] text-gray-400">{d.date}</p>
                                 </div>
                             </div>
                             <span className="text-primary font-bold">￥{d.amount}</span>

@@ -1,16 +1,17 @@
 import React, { useState, useMemo } from 'react';
-import { DONATIONS } from '../services/mockData';
+import { useData } from '../contexts/DataContext';
 
 const TransactionList: React.FC = () => {
+  const { donations } = useData(); // Use dynamic data
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [minAmount, setMinAmount] = useState('');
   const [maxAmount, setMaxAmount] = useState('');
   const [keyword, setKeyword] = useState('');
-  const [payType, setPayType] = useState('全部'); // Used as simplified Type filter for demo
+  const [payType, setPayType] = useState('全部'); 
 
   const filteredData = useMemo(() => {
-    return DONATIONS.filter(item => {
+    return donations.filter(item => {
       // Date Filter
       if (startDate && item.date < startDate) return false;
       if (endDate && item.date > endDate) return false;
@@ -23,12 +24,9 @@ const TransactionList: React.FC = () => {
       // Keyword Filter
       if (keyword && !item.donor.includes(keyword) && !item.projectTitle.includes(keyword)) return false;
 
-      // Type Filter (Mocking functionality using payType/Category logic)
-      if (payType !== '全部' && !item.payType.includes(payType) && payType === '资金捐赠') return true; // Just a logic placeholder
-
       return true;
     });
-  }, [startDate, endDate, minAmount, maxAmount, keyword, payType]);
+  }, [donations, startDate, endDate, minAmount, maxAmount, keyword, payType]);
 
   return (
     <div className="bg-white py-8 min-h-screen">

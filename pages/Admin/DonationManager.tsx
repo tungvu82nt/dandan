@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { DONATIONS } from '../../services/mockData';
+import { useData } from '../../contexts/DataContext';
 import { Search, Download } from 'lucide-react';
 import { SEO } from '../../components/Shared/SEO';
 
 const DonationManager: React.FC = () => {
+  const { donations } = useData(); // Use dynamic data from context
   const [searchTerm, setSearchTerm] = useState('');
   
-  const filteredData = DONATIONS.filter(d => 
+  const filteredData = donations.filter(d => 
     d.donor.includes(searchTerm) || d.projectTitle.includes(searchTerm)
   );
 
@@ -68,7 +69,7 @@ const DonationManager: React.FC = () => {
                         <td className="p-4">{d.date}</td>
                         <td className="p-4 font-medium">{d.donor}</td>
                         <td className="p-4 text-accent font-bold">￥{d.amount}</td>
-                        <td className="p-4 text-gray-500">{d.projectTitle}</td>
+                        <td className="p-4 text-gray-500 max-w-xs truncate">{d.projectTitle}</td>
                         <td className="p-4">{d.payType}</td>
                         <td className="p-4">{d.channel}</td>
                         <td className="p-4">

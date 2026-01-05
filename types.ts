@@ -75,3 +75,23 @@ export interface NoticeItem {
   link: string;
   icon?: string; // Emoji hoặc icon, mặc định: 📢
 }
+
+export interface SiteConfig {
+  headerImage: string;
+  banners: string[];
+  notices: NoticeItem[];
+  footer: {
+    address: string;
+    phone: string;
+    email: string;
+    bankName: string;
+    bankAccount: string;
+    bankUnit: string;
+    techSupport: string;
+  };
+  baseStats: {
+    raised: number;
+    distributed: number;
+    donors: number;
+  };
+}

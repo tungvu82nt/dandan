@@ -1,10 +1,5 @@
-/**
- * API Service Layer
- * Trung gian giữa frontend và database
- * Sử dụng NeonDB serverless driver
- */
 import { sql } from '../database/db';
-import type { Project, Fund, NewsItem, DonationRecord, Volunteer, NoticeItem } from '../types';
+import type { Project, Fund, NewsItem, DonationRecord, Volunteer, NoticeItem, SiteConfig } from '../types';
 
 // =============================================
 // CACHE UTILS
@@ -373,26 +368,42 @@ export const AuthAPI = {
 // SITE CONFIG API
 // =============================================
 export const SiteConfigAPI = {
-  async get(key: string): Promise<any> {
-    const result = await sql`SELECT config_value FROM site_config WHERE config_key = ${key}`;
-    return result.length > 0 ? result[0].config_value : null;
-  },
-
-  async set(key: string, value: any): Promise<void> {
-    await sql`
-      INSERT INTO site_config (config_key, config_value)
-      VALUES (${key}, ${JSON.stringify(value)}::jsonb)
-      ON CONFLICT (config_key) 
-      DO UPDATE SET config_value = ${JSON.stringify(value)}::jsonb, updated_at = CURRENT_TIMESTAMP
+  /**
+   * Get site configuration (always ID = 1)
+   */
+  async getConfig(): Promise<SiteConfig | null> {
+    const result = await sql`
+      SELECT header_image, banners, notices, footer_info, base_stats
+      FROM site_configs
+      WHERE id = 1
     `;
+
+    if (result.length === 0) return null;
+
+    const row = result[0];
+    return {
+      headerImage: row.header_image,
+      banners: row.banners || [],
+      notices: row.notices || [],
+      footer: row.footer_info || {},
+      baseStats: row.base_stats || {}
+    } as SiteConfig;
   },
 
-  async getAll(): Promise<Record<string, any>> {
-    const result = await sql`SELECT config_key, config_value FROM site_config`;
-    const config: Record<string, any> = {};
-    result.forEach(row => {
-      config[row.config_key as string] = row.config_value;
-    });
-    return config;
-  },
+  /**
+   * Update site configuration
+   */
+  async updateConfig(config: SiteConfig): Promise<void> {
+    await sql`
+      UPDATE site_configs
+      SET 
+        header_image = ${config.headerImage},
+        banners = ${JSON.stringify(config.banners)},
+        notices = ${JSON.stringify(config.notices)},
+        footer_info = ${JSON.stringify(config.footer)},
+        base_stats = ${JSON.stringify(config.baseStats)},
+        updated_at = NOW()
+      WHERE id = 1
+    `;
+  }
 };

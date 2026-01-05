@@ -1,26 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { NoticeItem } from '../types';
-
-// Define the shape of our configuration
-export interface SiteConfig {
-  headerImage: string;
-  banners: string[];
-  notices: NoticeItem[]; // Mảng thông báo chạy
-  footer: {
-    address: string;
-    phone: string;
-    email: string;
-    bankName: string;
-    bankAccount: string;
-    bankUnit: string;
-    techSupport: string;
-  };
-  baseStats: {
-    raised: number;
-    distributed: number;
-    donors: number;
-  };
-}
+import { NoticeItem, SiteConfig } from '../types';
 
 // Default values (The original hardcoded values)
 const DEFAULT_CONFIG: SiteConfig = {
@@ -59,36 +38,46 @@ interface SiteConfigContextType {
 
 const SiteConfigContext = createContext<SiteConfigContextType | null>(null);
 
+import { SiteConfigAPI } from '../services/api';
+
+// ... (keep usage of DEFAULT_CONFIG)
+
 export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [config, setConfig] = useState<SiteConfig>(DEFAULT_CONFIG);
 
-  // Load from localStorage on mount
+  // Load from Database on mount
   useEffect(() => {
-    const savedConfig = localStorage.getItem('siteConfig');
-    if (savedConfig) {
+    const loadConfig = async () => {
       try {
-        const parsed = JSON.parse(savedConfig);
-        // Merge với DEFAULT_CONFIG để đảm bảo có đầy đủ fields mới
-        setConfig({
-          ...DEFAULT_CONFIG,
-          ...parsed,
-          notices: parsed.notices || DEFAULT_CONFIG.notices, // Fallback cho field notices mới
-          baseStats: parsed.baseStats || DEFAULT_CONFIG.baseStats // Fallback cho field baseStats mới
-        });
-      } catch (e) {
-        console.error("Failed to parse site config", e);
+        const remoteConfig = await SiteConfigAPI.getConfig();
+        if (remoteConfig) {
+          setConfig(remoteConfig);
+        }
+      } catch (error) {
+        console.error("Failed to load site config from DB", error);
+        // Fallback or just use defaults
       }
-    }
+    };
+    loadConfig();
   }, []);
 
-  const updateConfig = (newConfig: SiteConfig) => {
-    setConfig(newConfig);
-    localStorage.setItem('siteConfig', JSON.stringify(newConfig));
+  const updateConfig = async (newConfig: SiteConfig) => {
+    try {
+      // Optimistic update
+      setConfig(newConfig);
+      await SiteConfigAPI.updateConfig(newConfig);
+    } catch (error) {
+      console.error("Failed to save config to DB", error);
+    }
   };
 
-  const resetConfig = () => {
-    setConfig(DEFAULT_CONFIG);
-    localStorage.setItem('siteConfig', JSON.stringify(DEFAULT_CONFIG));
+  const resetConfig = async () => {
+    try {
+      setConfig(DEFAULT_CONFIG);
+      await SiteConfigAPI.updateConfig(DEFAULT_CONFIG);
+    } catch (error) {
+      console.error("Failed to reset config", error);
+    }
   };
 
   return (

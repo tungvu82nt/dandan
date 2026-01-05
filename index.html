@@ -1,103 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh-cn" class="scroll-smooth">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="https://res-img.n.gongyibao.cn/uploads/1dbdc970-d95e-45a8-859b-86e4e9abe89e/20190619/280a013ec8d941a48bc849146b874229.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#ca231e" />
-    <meta name="description" content="长安仁爱慈善基金会" />
-    <title>长安仁爱慈善基金会</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['"Microsoft YaHei"', 'SimHei', 'SimSun', 'Arial', 'Helvetica', 'sans-serif'],
-            },
-            colors: {
-              // Main Colors
-              primary: '#ca231e',      // Main Red (Menu BG)
-              secondary: '#ba141a',    // Hover/Active Red
-              darkRed: '#a71c1d',      // Accent Red
-              brightRed: '#ea2b32',    // Button/Header BG
-              
-              // Text & Link Colors
-              linkRed: '#da2c31',      // Link Text
-              hoverRed: '#ED4040',     // Link Hover
-              textMain: '#333333',     // Main Text (Headers)
-              textSub: '#666666',      // Sub Text (Descriptions)
-              textLight: '#999999',    // Meta Text (Dates)
-              
-              // Accents
-              accent: '#fc960c',       // Orange (H1 / Highlights)
-              badge: '#f7b709',        // Yellow (Badges)
-              
-              // Backgrounds & Borders
-              bgFooter: '#f2f2f2',     // Footer Background
-              bgBlock: '#f5f6f7',      // Light Block Background
-              borderGray: '#dedede',   // Borders
-              lightGray: '#f5f6f7'     // Alias for bgBlock
-            },
-            maxWidth: {
-              'container': '1200px',
-            },
-            keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0', transform: 'translateY(10px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              },
-              marquee: {
-                '0%': { transform: 'translateX(100%)' },
-                '100%': { transform: 'translateX(-100%)' },
-              }
-            },
-            animation: {
-              fadeIn: 'fadeIn 0.3s ease-out forwards',
-              marquee: 'marquee 20s linear infinite',
-            }
-          }
-        }
-      }
-    </script>
-    <style>
-      body {
-        font-family: "Microsoft YaHei", SimHei, SimSun, Arial, Helvetica, sans-serif;
-        font-size: 12px;
-        color: #000000;
-        background-color: #ffffff;
-      }
-      
-      /* Typography Overrides */
-      h1, .h1 { font-size: 24px; }
-      h2, .h2 { font-size: 18px; }
-      h3, .h3 { font-size: 16px; }
-      .menu-item { font-size: 16px; }
-      
-      /* Custom scrollbar for webkit */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #f1f1f1; 
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #888; 
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #555; 
-      }
-      
-      /* Pause animation utility */
-      .pause-on-hover:hover {
-        animation-play-state: paused;
-      }
-    </style>
-    <script type="module" src="/index.tsx"></script>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-  </body>
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon"
+    href="https://res-img.n.gongyibao.cn/uploads/1dbdc970-d95e-45a8-859b-86e4e9abe89e/20190619/280a013ec8d941a48bc849146b874229.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ca231e" />
+  <meta name="description" content="长安仁爱慈善基金会" />
+  <title>长安仁爱慈善基金会</title>
+  <title>长安仁爱慈善基金会</title>
+  <!-- Tailwind CSS is now built via PostCSS -->
+</head>
+<script type="module" src="/index.tsx"></script>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+</body>
+
 </html>

@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Typography Overrides */
+h1, .h1 { font-size: 24px; }
+h2, .h2 { font-size: 18px; }
+h3, .h3 { font-size: 16px; }
+.menu-item { font-size: 16px; }
+
+/* Custom scrollbar for webkit */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* Pause animation utility */
+.pause-on-hover:hover {
+  animation-play-state: paused;
+}

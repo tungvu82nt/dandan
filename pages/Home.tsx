@@ -3,14 +3,18 @@ import { Link } from 'react-router-dom';
 import { useData } from '../contexts/DataContext';
 import { Card } from '../components/Shared/Card';
 import { SEO } from '../components/Shared/SEO';
+import { Loading, ErrorMessage } from '../components/Shared/Loading';
 import { HomeBanner } from '../components/Home/HomeBanner';
 import { NoticeBar } from '../components/Home/NoticeBar';
 import { StatsGrid } from '../components/Home/StatsGrid';
 import { DonationTable } from '../components/Home/DonationTable';
 
 const Home: React.FC = () => {
-  const { projects, news: NEWS, funds: FUNDS, donations: DONATIONS } = useData();
+  const { projects, news: NEWS, funds: FUNDS, donations: DONATIONS, loading, error, refreshData } = useData();
   const [activeNewsTab, setActiveNewsTab] = useState<'news' | 'media' | 'district'>('news');
+
+  if (loading) return <Loading />;
+  if (error) return <ErrorMessage message={error} onRetry={refreshData} />;
 
   const getFilteredNews = () => {
     if (activeNewsTab === 'news') return NEWS.filter(n => n.category === 'charity'); 

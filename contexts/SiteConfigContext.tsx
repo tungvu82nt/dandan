@@ -14,7 +14,12 @@ export interface SiteConfig {
     bankAccount: string;
     bankUnit: string;
     techSupport: string;
-  }
+  };
+  baseStats: {
+    raised: number;
+    distributed: number;
+    donors: number;
+  };
 }
 
 // Default values (The original hardcoded values)
@@ -38,6 +43,11 @@ const DEFAULT_CONFIG: SiteConfig = {
     bankAccount: "62150178900000256",
     bankUnit: "长安仁爱慈善基金会",
     techSupport: "北京厚普聚益科技有限公司"
+  },
+  baseStats: {
+    raised: 542000000,
+    distributed: 489000000,
+    donors: 1280000
   }
 };
 
@@ -62,7 +72,8 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         setConfig({
           ...DEFAULT_CONFIG,
           ...parsed,
-          notices: parsed.notices || DEFAULT_CONFIG.notices // Fallback cho field notices mới
+          notices: parsed.notices || DEFAULT_CONFIG.notices, // Fallback cho field notices mới
+          baseStats: parsed.baseStats || DEFAULT_CONFIG.baseStats // Fallback cho field baseStats mới
         });
       } catch (e) {
         console.error("Failed to parse site config", e);

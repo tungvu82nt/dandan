@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { AuthAPI } from '../services/api';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: (token: string) => void;
+  login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -13,14 +14,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
-    if (token === 'demo-token') {
+    if (token === 'admin-authenticated-token') {
       setIsAuthenticated(true);
     }
   }, []);
 
-  const login = (token: string) => {
-    localStorage.setItem('adminToken', token);
-    setIsAuthenticated(true);
+  const login = async (username: string, pass: string): Promise<boolean> => {
+    try {
+      const isValid = await AuthAPI.login(username, pass);
+      if (isValid) {
+        localStorage.setItem('adminToken', 'admin-authenticated-token');
+        setIsAuthenticated(true);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Login Check Failed", error);
+      return false;
+    }
   };
 
   const logout = () => {

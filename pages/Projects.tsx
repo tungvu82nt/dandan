@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useData } from '../contexts/DataContext';
+import { Loading, ErrorMessage } from '../components/Shared/Loading';
 
 const Projects: React.FC = () => {
-  const { projects } = useData();
+  const { projects, loading, error, refreshData } = useData();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
 
@@ -22,43 +23,49 @@ const Projects: React.FC = () => {
           <h1 className="text-4xl text-white font-bold drop-shadow-md">慈善项目</h1>
         </div>
 
-        {/* Filter Bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-gray-200 pb-4">
-          <ul className="flex gap-6 text-sm font-medium text-gray-600 mb-4 md:mb-0">
-            <li 
-                className={`cursor-pointer pb-1 ${filterCategory === 'all' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'}`}
-                onClick={() => setFilterCategory('all')}
-            >全部</li>
-            <li 
-                className={`cursor-pointer pb-1 ${filterCategory === 'aid' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'}`}
-                onClick={() => setFilterCategory('aid')}
-            >扶贫济困</li>
-            <li 
-                className={`cursor-pointer pb-1 ${filterCategory === 'education' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'}`}
-                onClick={() => setFilterCategory('education')}
-            >助学支教</li>
-            <li 
-                className={`cursor-pointer pb-1 ${filterCategory === 'medical' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'}`}
-                onClick={() => setFilterCategory('medical')}
-            >医疗救助</li>
-             <li 
-                className={`cursor-pointer pb-1 ${filterCategory === 'activity' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'}`}
-                onClick={() => setFilterCategory('activity')}
-            >公益活动</li>
-          </ul>
-          <div className="flex">
-            <input 
-              type="text" 
-              placeholder="请输入关键字" 
-              className="border border-gray-300 px-3 py-1.5 text-sm rounded-l focus:outline-none focus:border-primary w-64"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button className="bg-primary text-white px-4 py-1.5 text-sm rounded-r hover:bg-secondary">
-              查找
-            </button>
-          </div>
-        </div>
+        {loading ? (
+          <Loading />
+        ) : error ? (
+          <ErrorMessage message={error} onRetry={refreshData} />
+        ) : (
+          <>
+            {/* Filter Bar */}
+            <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-gray-200 pb-4">
+              <ul className="flex gap-6 text-sm font-medium text-gray-600 mb-4 md:mb-0">
+                <li 
+                    className={`cursor-pointer pb-1 ${filterCategory === 'all' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'}`}
+                    onClick={() => setFilterCategory('all')}
+                >全部</li>
+                <li 
+                    className={`cursor-pointer pb-1 ${filterCategory === 'aid' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'}`}
+                    onClick={() => setFilterCategory('aid')}
+                >扶贫济困</li>
+                <li 
+                    className={`cursor-pointer pb-1 ${filterCategory === 'education' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'}`}
+                    onClick={() => setFilterCategory('education')}
+                >助学支教</li>
+                <li 
+                    className={`cursor-pointer pb-1 ${filterCategory === 'medical' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'}`}
+                    onClick={() => setFilterCategory('medical')}
+                >医疗救助</li>
+                 <li 
+                    className={`cursor-pointer pb-1 ${filterCategory === 'activity' ? 'text-primary border-b-2 border-primary' : 'hover:text-primary'}`}
+                    onClick={() => setFilterCategory('activity')}
+                >公益活动</li>
+              </ul>
+              <div className="flex">
+                <input 
+                  type="text" 
+                  placeholder="请输入关键字" 
+                  className="border border-gray-300 px-3 py-1.5 text-sm rounded-l focus:outline-none focus:border-primary w-64"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button className="bg-primary text-white px-4 py-1.5 text-sm rounded-r hover:bg-secondary">
+                  查找
+                </button>
+              </div>
+            </div>
 
         {/* Project Grid */}
         {filteredProjects.length > 0 ? (
@@ -116,6 +123,8 @@ const Projects: React.FC = () => {
           <button className="px-3 py-1 border border-primary bg-primary text-white rounded text-sm">1</button>
            <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-400">下一页</button>
         </div>
+          </>
+        )}
 
       </div>
     </div>
